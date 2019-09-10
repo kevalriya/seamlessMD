@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>Patient Information:</h3>
+
+<p id="name"></p>
+<p id="orgName"></p>
+<p id="gender"></p>
+<p id="conditions"></p>
+<p id="listOfConditions">List of all conditions:<ul></ul></p>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<script>
+
+var ul = $('ul');
+$.getJSON("patient.json", function(data){
+	var patient = data.name[0];
+	var conditions = data.conditions;
+	document.getElementById("name").innerHTML = "Name of patient: " + patient.given[0] + " " + patient.family[0] ;
+	document.getElementById("orgName").innerHTML = "Organization name: " + data.managingOrganization.display ;
+	document.getElementById("gender").innerHTML = "Gender: " + data.gender ;
+	document.getElementById("conditions").innerHTML = "Number of conditions they have: " + conditions.length;
+	
+	$.each(conditions, function(i, condition){
+		var list = "<li>" + condition + "</li>"
+		ul.append(list);
+	})
+})
+</script>
+
+</body>
+</html>
